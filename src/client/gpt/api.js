@@ -7,14 +7,18 @@ const configuration = new Configuration({
 const gptResponse = async (prompt) => {
   try {
     const openai = new OpenAIApi(configuration);
-    const completion = await openai.createCompletion({
-      model: 'text-davinci-003',
-      prompt,
+
+    const completion = await openai.createChatCompletion({
+      messages: [
+        { role: 'system', content: 'You are a helpful assistant.' },
+        { role: 'assistant', content: prompt.assistant },
+        { role: 'user', content: prompt.user },
+      ],
+      model: 'gpt-3.5-turbo',
       max_tokens: 3000,
     });
-    const response = completion.data.choices[0].text;
 
-    return response;
+    return completion.data.choices[0].message.content;
   } catch (error) {
     throw new Error(error);
   }

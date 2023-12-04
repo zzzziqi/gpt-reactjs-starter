@@ -52,7 +52,7 @@ function Recipe() {
             <div className="w-full">
               {recipe.steps.map((step, index) => (
                 <p key={index} className="text-xl font-semibold text-wave-blue my-2">
-                  {step}
+                  {index + 1}: {step}
                 </p>
               ))}
             </div>
