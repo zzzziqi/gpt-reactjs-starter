@@ -13,8 +13,8 @@ function DishForm({ submit }) {
       className="flex flex-col justify-center items-center bg-white py-8 px-4 rounded-lg shadow-custom"
       onSubmit={handleSubmit}
     >
-      <div className="flex justify-between">
-        <p className="text-2xl px-4 mb-6 text-wave-blue font-semibold">
+      <div className="flex justify-between w-[90%]">
+        <p className="text-2xl mb-6 text-wave-blue font-semibold">
           Recipe builder: Turn your cravings into reality
         </p>
       </div>

@@ -10,12 +10,11 @@ const gptResponseBuilder = async (promptKey, promptOptions) => {
   const promptFunction = promptMap[promptKey];
   const prompt = await promptFunction(promptOptions);
 
-  const response = await gptResponse(prompt);
+  const { response, tokenUsage } = await gptResponse(prompt);
   const sanitizedResponse = sanitize(response);
   const parsedResponse = JSON.parse(sanitizedResponse);
   console.log(parsedResponse, 'parsedResponse');
 
-  return parsedResponse;
+  return { response: parsedResponse, tokenUsage };
 };
-
 export default gptResponseBuilder;

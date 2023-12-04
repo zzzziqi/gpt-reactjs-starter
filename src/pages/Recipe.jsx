@@ -2,14 +2,18 @@ import { useState } from 'react';
 import gptResponseBuilder from '../client/gpt';
 import DishForm from '../components/form';
 import Loader from '../components/loader';
+import useTokenUsage from '../store/tokenUsageStore.js';
 
 function Recipe() {
   const [recipe, setRecipe] = useState();
   const [isLoading, setLoading] = useState();
 
+  const { updateTokenUsage } = useTokenUsage();
+
   const handleSubmit = async (recipe) => {
     setLoading(true);
-    const response = await gptResponseBuilder('RECIPE', recipe);
+    const { response, tokenUsage } = await gptResponseBuilder('RECIPE', recipe);
+    updateTokenUsage(tokenUsage);
     setRecipe(response);
     setLoading(false);
   };
@@ -21,11 +25,10 @@ function Recipe() {
       </div>
     );
   }
-
   return (
-    <div className="container mx-auto flex flex-col md:flex-row h-screen items-center justify-center gap-8 p-4">
+    <div className="container mx-auto flex flex-col md:flex-row h-screen items-center justify-center gap-20 p-4">
       {!isLoading && !recipe ? (
-        <div>
+        <div className={'w-full'}>
           <DishForm submit={handleSubmit} />
         </div>
       ) : (

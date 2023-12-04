@@ -18,7 +18,10 @@ const gptResponse = async (prompt) => {
       max_tokens: 3000,
     });
 
-    return completion.data.choices[0].message.content;
+    return {
+      response: completion.data.choices[0].message.content,
+      tokenUsage: completion.data.usage,
+    };
   } catch (error) {
     throw new Error(error);
   }
