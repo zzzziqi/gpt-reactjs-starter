@@ -1,19 +1,20 @@
 import gptResponse from './api';
-import { recipePrompt } from './promptEngine';
+import { ingredientsPrompt, recipePrompt } from './promptEngine';
 import { sanitize } from './promptHelper';
 
 const promptMap = {
   RECIPE: recipePrompt,
+  INGREDIENTS: ingredientsPrompt,
 };
 
-const gptResponseBuilder = async (promptKey, promptOptions) => {
+const gptResponseBuilder = async (promptKey, promptOptions, responseType) => {
   const promptFunction = promptMap[promptKey];
   const prompt = await promptFunction(promptOptions);
 
   const { response, tokenUsage } = await gptResponse(prompt);
-  const sanitizedResponse = sanitize(response);
+  const sanitizedResponse = sanitize(response, responseType);
+
   const parsedResponse = JSON.parse(sanitizedResponse);
-  console.log(parsedResponse, 'parsedResponse');
 
   return { response: parsedResponse, tokenUsage };
 };

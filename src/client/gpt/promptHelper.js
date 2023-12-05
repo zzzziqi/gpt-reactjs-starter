@@ -1,6 +1,6 @@
-const sanitize = (response) => {
-  const startIndex = response.indexOf('{');
-  const endIndex = response.lastIndexOf('}');
+const sanitize = (response, responseType = undefined) => {
+  const startIndex = responseType === 'array' ? response.indexOf('[') : response.indexOf('{');
+  const endIndex = responseType === 'array' ? response.lastIndexOf(']') : response.lastIndexOf('}');
 
   const replaced = response
     .slice(startIndex, endIndex + 1)

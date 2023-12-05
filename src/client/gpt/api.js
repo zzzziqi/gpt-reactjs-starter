@@ -9,13 +9,9 @@ const gptResponse = async (prompt) => {
     const openai = new OpenAIApi(configuration);
 
     const completion = await openai.createChatCompletion({
-      messages: [
-        { role: 'system', content: 'You are a helpful assistant.' },
-        { role: 'assistant', content: prompt.assistant },
-        { role: 'user', content: prompt.user },
-      ],
-      model: 'gpt-3.5-turbo',
-      max_tokens: 3000,
+      messages: [{ role: 'system', content: 'You are a helpful assistant.' }, ...prompt],
+      model: 'gpt-3.5-turbo-16k',
+      max_tokens: 6000,
     });
 
     return {

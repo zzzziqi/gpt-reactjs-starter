@@ -11,10 +11,15 @@ function Recipe() {
   const { updateTokenUsage } = useTokenUsage();
 
   const handleSubmit = async (recipe) => {
+    console.log(recipe, 'recipe=================');
     setLoading(true);
-    const { response, tokenUsage } = await gptResponseBuilder('RECIPE', recipe);
-    updateTokenUsage(tokenUsage);
-    setRecipe(response);
+    const { response: dishResponse, tokenUsage: dishTokenUsage } = await gptResponseBuilder(
+      'RECIPE',
+      recipe,
+    );
+    updateTokenUsage(dishTokenUsage);
+    setRecipe(dishResponse);
+
     setLoading(false);
   };
 
